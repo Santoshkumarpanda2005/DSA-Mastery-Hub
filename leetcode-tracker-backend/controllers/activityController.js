@@ -42,35 +42,63 @@ ${code}`;
             }
         }
 
-        const newActivity = new Activity({
-            userId,
-            problemName,
-            difficulty,
-            topic,
-            timeSpent,
-            attempts,
-            accepted,
-            runtime,
-            memory,
-            code,
-            language,
-            timeComplexity,
-            spaceComplexity,
-            recommendations: recommendedProblems
-        });
+        let isNewActivity = false;
+        let activity = await Activity.findOne({ userId, problemName });
 
-        await newActivity.save();
+        if (activity) {
+            console.log(`Updating existing activity for ${problemName}`);
+            activity.difficulty = difficulty || activity.difficulty;
+            if (topic && topic.length > 0) activity.topic = topic;
+            activity.timeSpent += (timeSpent || 0);
+            activity.attempts += (attempts || 1);
+            // If it becomes accepted or was already accepted, keep it true
+            activity.accepted = accepted || activity.accepted;
+            
+            if (runtime) activity.runtime = runtime;
+            if (memory) activity.memory = memory;
+            
+            if (code && code.trim() !== "") {
+                activity.code = code;
+                activity.language = language || activity.language;
+                if (timeComplexity !== "Unknown") activity.timeComplexity = timeComplexity;
+                if (spaceComplexity !== "Unknown") activity.spaceComplexity = spaceComplexity;
+                if (recommendedProblems.length > 0) activity.recommendations = recommendedProblems;
+            }
+            await activity.save();
+        } else {
+            console.log(`Creating new activity for ${problemName}`);
+            isNewActivity = true;
+            activity = new Activity({
+                userId,
+                problemName,
+                difficulty,
+                topic,
+                timeSpent: timeSpent || 0,
+                attempts: attempts || 1,
+                accepted,
+                runtime,
+                memory,
+                code,
+                language,
+                timeComplexity,
+                spaceComplexity,
+                recommendations: recommendedProblems
+            });
+            await activity.save();
+        }
 
-        // Update Skill Profile
-        let skillProfile = await SkillProfile.findOne({ userId });
-        if (!skillProfile) {
-            skillProfile = new SkillProfile({ userId, scores: {} });
+        // Update Skill Profile only for new activities to prevent skill score inflation
+        if (isNewActivity) {
+            let skillProfile = await SkillProfile.findOne({ userId });
+            if (!skillProfile) {
+                skillProfile = new SkillProfile({ userId, scores: {} });
+            }
+            for (let t of topic) {
+                let currentScore = skillProfile.scores.get(t) || 0;
+                skillProfile.scores.set(t, currentScore + 1);
+            }
+            await skillProfile.save();
         }
-        for (let t of topic) {
-            let currentScore = skillProfile.scores.get(t) || 0;
-            skillProfile.scores.set(t, currentScore + 1);
-        }
-        await skillProfile.save();
 
         console.log("Activity processed and saved across relational models.");
         res.status(201).json({ message: 'Activity tracked successfully' });
