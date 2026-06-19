@@ -19,7 +19,7 @@ exports.trackActivity = async (req, res) => {
         if (code && code.trim() !== "") {
             try {
                 console.log("Analyzing code complexity with Gemini...");
-                const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+                const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
                 const prompt = `Analyze the following code snippet and determine its time and space complexity in Big-O notation. 
 Then, based on the problem topics (${topic.join(', ')}), recommend exactly 3 related LeetCode problems.
 Return ONLY a valid JSON object with the exact keys "timeComplexity", "spaceComplexity", and "recommendedProblems" (array of strings). 
