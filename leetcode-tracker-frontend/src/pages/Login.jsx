@@ -62,7 +62,7 @@ export default function Login({ onLogin }) {
           <div className="bg-sky-500/20 p-2 rounded-xl border border-sky-500/30">
             <Code2 className="text-sky-400" size={28} />
           </div>
-          <span className="text-2xl font-bold tracking-wider text-slate-200">LeetCode<span className="text-sky-400">AI</span></span>
+          <span className="text-2xl font-bold tracking-wider text-slate-200">DSA<span className="text-sky-400">Master</span></span>
         </div>
 
         <div className="relative z-10 max-w-xl">

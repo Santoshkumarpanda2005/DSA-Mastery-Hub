@@ -33,7 +33,7 @@ export default function Layout({ onLogout }) {
             <div className="bg-slate-100 dark:bg-sky-500/20 rounded-xl overflow-hidden flex items-center justify-center w-10 h-10 border border-slate-200 dark:border-sky-500/30">
               <img src={logoImg} alt="DSA Mastery Logo" className="w-full h-full object-cover" />
             </div>
-            <span className="text-xl font-bold tracking-wider text-slate-900 dark:text-slate-200">DSA<span className="font-normal text-slate-500 dark:text-sky-400">Mastery</span></span>
+            <span className="text-xl font-bold tracking-wider text-slate-900 dark:text-slate-200">DSA<span className="font-normal text-slate-500 dark:text-sky-400">Master</span></span>
           </div>
 
           <nav className="p-4 flex flex-col gap-2">
