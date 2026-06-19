@@ -136,7 +136,7 @@ export default function Login({ onLogin }) {
                 type="text" required={isForgotPassword || isRegistering}
                 placeholder="johndoe123"
                 className="w-full bg-white dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700/80 rounded-lg p-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus:border-slate-900 dark:focus:border-sky-500 focus:ring-1 focus:ring-slate-900 dark:focus:ring-sky-500 transition-all"
-                value={username} onChange={(e) => setLeetcodeUsername(e.target.value)}
+                value={username} onChange={(e) => setUsername(e.target.value)}
               />
             </div>
 

@@ -19,7 +19,7 @@ exports.trackActivity = async (req, res) => {
         if (code && code.trim() !== "") {
             try {
                 console.log("Analyzing code complexity with Gemini...");
-                const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
                 const prompt = `Analyze the following code snippet and determine its time and space complexity in Big-O notation. 
 Then, based on the problem topics (${topic.join(', ')}), recommend exactly 3 related LeetCode problems.
 Return ONLY a valid JSON object with the exact keys "timeComplexity", "spaceComplexity", and "recommendedProblems" (array of strings). 
@@ -27,10 +27,10 @@ Do not include any other text, markdown formatting, or explanations.
 
 Code:
 ${code}`;
-                
+
                 const result = await model.generateContent(prompt);
                 const response = result.response.text();
-                
+
                 const cleanJsonStr = response.replace(/```json/g, '').replace(/```/g, '').trim();
                 const aiResult = JSON.parse(cleanJsonStr);
 
@@ -53,10 +53,10 @@ ${code}`;
             activity.attempts += (attempts || 1);
             // If it becomes accepted or was already accepted, keep it true
             activity.accepted = accepted || activity.accepted;
-            
+
             if (runtime) activity.runtime = runtime;
             if (memory) activity.memory = memory;
-            
+
             if (code && code.trim() !== "") {
                 activity.code = code;
                 activity.language = language || activity.language;
@@ -111,7 +111,7 @@ ${code}`;
 exports.getActivity = async (req, res) => {
     try {
         const userId = req.user.sub;
-        
+
         // Find by either string userId or ObjectId userId for backwards compatibility
         const mongoose = require('mongoose');
         const userIdsToCheck = [userId];
@@ -121,7 +121,7 @@ exports.getActivity = async (req, res) => {
 
         const activities = await Activity.find({ userId: { $in: userIdsToCheck } }).sort({ createdAt: -1 }).limit(100);
         const skillProfile = await SkillProfile.findOne({ userId: { $in: userIdsToCheck } });
-        
+
         let user = null;
         for (const id of userIdsToCheck) {
             user = await User.findById(id);
@@ -132,9 +132,9 @@ exports.getActivity = async (req, res) => {
         const totalTimeSpent = activities.reduce((total, act) => total + (act.timeSpent || 0), 0);
 
         res.json({
-            user: user ? { 
-                email: user.email, 
-                leetcodeUsername: user.leetcodeUsername, 
+            user: user ? {
+                email: user.email,
+                leetcodeUsername: user.leetcodeUsername,
                 createdAt: user.createdAt,
                 name: user.name,
                 bio: user.bio,
