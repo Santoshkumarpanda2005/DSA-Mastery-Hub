@@ -1,16 +1,35 @@
-# React + Vite
+# 🎨 DSA Mastery Hub - Frontend Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The beautiful, responsive, user-facing dashboard for the DSA Mastery Hub ecosystem. Built with React, Vite, and Tailwind CSS, it visualizes the LeetCode data collected by the Chrome extension.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Auth System:** Secure JWT-based Login and Registration.
+- **Dynamic Profile:** Update your personal info, links, and avatar.
+- **Analytics Dashboard:** 
+  - Radar charts visualizing your skill levels across different algorithm topics.
+  - Counters for Total Solved, Easy, Medium, and Hard problems.
+  - A timeline of your recent activity and AI-generated complexity analysis.
+- **Dark Mode:** Built-in theme toggling for late-night coding sessions.
 
-## React Compiler
+## 🛠️ Setup Instructions
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
 
-## Expanding the ESLint configuration
+2. **Configure Environment:**
+   By default, the API URLs are pointed to the production Render backend (`https://dsa-mastery-hub.onrender.com`). If you want to test locally, update the `axios` calls in the pages to point to `http://localhost:5000`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3. **Start the Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Navigate to `http://localhost:5173` in your browser.
+
+## 📦 Build for Production
+```bash
+npm run build
+```
+This will generate a `dist` folder ready to be deployed to Vercel, Netlify, or Render.
