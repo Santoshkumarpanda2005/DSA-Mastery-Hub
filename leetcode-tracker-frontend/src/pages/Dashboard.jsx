@@ -10,7 +10,7 @@ export default function Dashboard({ token }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('https://leetcode-tracker-api-h7cp.onrender.com/api/activity/', {
+        const res = await axios.get('https://dsa-mastery-hub.onrender.com/api/activity/', {
           headers: { Authorization: `Bearer ${token}` }
         });
         

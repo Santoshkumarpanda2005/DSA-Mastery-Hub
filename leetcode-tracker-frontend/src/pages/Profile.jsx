@@ -13,10 +13,10 @@ export default function Profile({ token }) {
     const fetchData = async () => {
       try {
         const [activityRes, userRes] = await Promise.all([
-          axios.get('https://leetcode-tracker-api-h7cp.onrender.com/api/activity/', {
+          axios.get('https://dsa-mastery-hub.onrender.com/api/activity/', {
             headers: { Authorization: `Bearer ${token}` }
           }),
-          axios.get('https://leetcode-tracker-api-h7cp.onrender.com/api/user/profile', {
+          axios.get('https://dsa-mastery-hub.onrender.com/api/user/profile', {
             headers: { Authorization: `Bearer ${token}` }
           }).catch(err => {
             console.error("Failed to fetch user profile, falling back to activity user", err);

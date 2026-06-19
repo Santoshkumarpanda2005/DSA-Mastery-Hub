@@ -1,4 +1,4 @@
-const NODE_BACKEND_URL = "https://leetcode-tracker-api-h7cp.onrender.com/api/activity";
+const NODE_BACKEND_URL = "https://dsa-mastery-hub.onrender.com/api/activity";
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === "problemSolved") {

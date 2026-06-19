@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { LogIn, UserPlus, Code2, Brain, Activity } from 'lucide-react';
 
-const API_URL = "https://leetcode-tracker-api-h7cp.onrender.com/api/auth";
+const API_URL = "https://dsa-mastery-hub.onrender.com/api/auth";
 
 export default function Login({ onLogin }) {
   const [isRegistering, setIsRegistering] = useState(false);

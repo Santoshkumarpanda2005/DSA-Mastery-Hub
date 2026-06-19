@@ -36,7 +36,7 @@ export default function EditProfile({ token }) {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await axios.get('https://leetcode-tracker-api-h7cp.onrender.com/api/user/profile', {
+        const res = await axios.get('https://dsa-mastery-hub.onrender.com/api/user/profile', {
           headers: { Authorization: `Bearer ${token}` }
         });
         
@@ -81,7 +81,7 @@ export default function EditProfile({ token }) {
     setError(null);
 
     try {
-      await axios.put('https://leetcode-tracker-api-h7cp.onrender.com/api/user/profile', formData, {
+      await axios.put('https://dsa-mastery-hub.onrender.com/api/user/profile', formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setMessage("Profile updated successfully!");

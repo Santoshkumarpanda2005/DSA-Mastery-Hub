@@ -13,7 +13,7 @@
   ],
   "host_permissions": [
     "https://leetcode.com/*",
-    "https://leetcode-tracker-api-h7cp.onrender.com/*"
+    "https://dsa-mastery-hub.onrender.com/*"
   ],
   "background": {
     "service_worker": "background.js"

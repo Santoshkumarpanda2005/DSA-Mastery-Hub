@@ -1,4 +1,4 @@
-const API_URL = "https://leetcode-tracker-api-h7cp.onrender.com/api/auth/login";
+const API_URL = "https://dsa-mastery-hub.onrender.com/api/auth/login";
 
 document.addEventListener('DOMContentLoaded', () => {
     const loginView = document.getElementById('loginView');
