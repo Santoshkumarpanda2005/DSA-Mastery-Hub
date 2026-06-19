@@ -1,4 +1,4 @@
-# 🚀 DSA Mastery Hub
+# 🚀 DSA Master Hub
 
 An intelligent, fully-automated LeetCode tracking platform designed to help you master Data Structures and Algorithms. 
 
