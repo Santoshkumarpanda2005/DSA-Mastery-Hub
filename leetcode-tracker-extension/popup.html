@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LeetCode Tracker Login</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; width: 300px; padding: 20px; background: #0f172a; color: #f8fafc; }
+        h2 { margin-top: 0; color: #38bdf8; text-align: center; }
+        input { width: 100%; padding: 10px; margin-bottom: 15px; box-sizing: border-box; border: 1px solid #334155; border-radius: 6px; background: #1e293b; color: white; }
+        button { width: 100%; padding: 10px; background: #38bdf8; color: #0f172a; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        button:hover { background: #0284c7; }
+        #status { margin-top: 15px; text-align: center; font-size: 14px; color: #ef4444; }
+        .hidden { display: none; }
+        #loggedInView { text-align: center; }
+        #logoutBtn { background: #ef4444; color: white; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h2>LeetCode Tracker</h2>
+    
+    <div id="loginView">
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Password" required />
+        <button id="loginBtn">Login</button>
+        <div id="status"></div>
+    </div>
+
+    <div id="loggedInView" class="hidden">
+        <p>✅ Logged in successfully!</p>
+        <p>Your submissions will be tracked.</p>
+        <button id="logoutBtn">Logout</button>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
