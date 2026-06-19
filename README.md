@@ -4,6 +4,12 @@ An intelligent, fully-automated LeetCode tracking platform designed to help you 
 
 This project consists of three main components that work together to seamlessly intercept your LeetCode submissions, analyze your code using Google's Gemini AI, and visualize your progress on a beautiful web dashboard.
 
+##Live Demo
+
+The application is deployed and accessible at:
+
+**🌐 Website: https://dsa-mastery-hub1.onrender.com/login**
+
 ## 🌟 Ecosystem Overview
 
 1. **[Chrome Extension](./leetcode-tracker-extension/)**
