@@ -1,38 +1,97 @@
 let startTime = Date.now();
 let attempts = 0;
 
-// Listen for the complete ACCEPTED result from inject.js
-window.addEventListener("message", (event) => {
-    if (event.source !== window) return;
-    
-    if (event.data.type === "LEETCODE_ACCEPTED") {
-        console.log("LeetCode Tracker: Received ACCEPTED payload from network intercept.");
-        
-        let interceptedData = event.data.data;
-        let timeSpent = Math.floor((Date.now() - startTime) / 1000);
+// Function to robustly get difficulty and topics
+async function getProblemDetails(slug) {
+    let details = { difficulty: "Unknown", topics: [] };
 
-        let payload = {
-            username: getUsername(),
-            problemName: getProblemName(),
-            difficulty: getDifficulty(),
-            topic: getTopics(),
-            timeSpent,
-            attempts,
-            accepted: true,
-            runtime: interceptedData.runtime,
-            memory: interceptedData.memory,
-            code: interceptedData.code,
-            language: interceptedData.language
-        };
-
-        console.log("LeetCode Tracker: Final Submission Payload:", payload);
-
-        chrome.runtime.sendMessage({
-            type: "problemSolved",
-            data: payload
-        });
+    // 1. Try DOM for Difficulty
+    let diffNode = document.querySelector('.text-difficulty-medium, .text-difficulty-easy, .text-difficulty-hard');
+    if (diffNode && diffNode.innerText) {
+        details.difficulty = diffNode.innerText;
+    } else {
+        // Alternative DOM check for difficulty
+        let altDiff = document.querySelector('.bg-olive, .bg-yellow, .bg-red');
+        if (altDiff && altDiff.innerText) details.difficulty = altDiff.innerText;
     }
-});
+
+    // 2. Try DOM for Topics
+    document.querySelectorAll('a[href*="/tag/"]').forEach(tag => {
+        details.topics.push(tag.innerText);
+    });
+
+    // 3. Fallback to GraphQL if either is missing
+    if (details.difficulty === "Unknown" || details.topics.length === 0) {
+        try {
+            const response = await fetch('https://leetcode.com/graphql', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    query: `query getQuestionDetail($titleSlug: String!) { question(titleSlug: $titleSlug) { difficulty topicTags { name } } }`,
+                    variables: { titleSlug: slug }
+                })
+            });
+            const data = await response.json();
+            if (data && data.data && data.data.question) {
+                if (details.difficulty === "Unknown" && data.data.question.difficulty) {
+                    details.difficulty = data.data.question.difficulty;
+                }
+                if (details.topics.length === 0 && data.data.question.topicTags) {
+                    details.topics = data.data.question.topicTags.map(tag => tag.name);
+                }
+            }
+        } catch (e) {
+            console.error("Tracker: Error fetching details via GraphQL", e);
+        }
+    }
+
+    return details;
+}
+
+// Listen for the complete ACCEPTED result from inject.js
+if (!window.leetcodeTrackerInjected) {
+    window.leetcodeTrackerInjected = true;
+    window.addEventListener("message", async (event) => {
+        if (event.source !== window) return;
+        
+        if (event.data.type === "LEETCODE_ACCEPTED") {
+            console.log("LeetCode Tracker: Received ACCEPTED payload from network intercept.");
+            
+            let interceptedData = event.data.data;
+            let timeSpent = Math.floor((Date.now() - startTime) / 1000);
+            
+            const urlParts = window.location.pathname.split('/');
+            const slug = urlParts[2]; // Index 2 is always the problem slug
+
+            const details = await getProblemDetails(slug);
+
+            let payload = {
+                username: getUsername(),
+                problemName: getProblemName(),
+                difficulty: details.difficulty,
+                topic: details.topics,
+                timeSpent,
+                attempts,
+                accepted: true,
+                runtime: interceptedData.runtime,
+                memory: interceptedData.memory,
+                code: interceptedData.code,
+                language: interceptedData.language
+            };
+
+            console.log("LeetCode Tracker: Final Submission Payload:", payload);
+
+            chrome.runtime.sendMessage({
+                type: "problemSolved",
+                data: payload
+            });
+
+            // Reset trackers for the next problem
+            startTime = Date.now();
+            attempts = 0;
+        }
+    });
+}
 
 // Extract Username
 function getUsername() {
@@ -67,21 +126,6 @@ function getProblemName() {
         return slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
     }
     return "Unknown Problem";
-}
-
-// Extract Difficulty
-function getDifficulty() {
-    let diff = document.querySelector('.text-difficulty-medium, .text-difficulty-easy, .text-difficulty-hard');
-    return diff ? diff.innerText : "Unknown";
-}
-
-// Extract Tags/Topics
-function getTopics() {
-    let topics = [];
-    document.querySelectorAll('a[href*="/tag/"]').forEach(tag => {
-        topics.push(tag.innerText);
-    });
-    return topics;
 }
 
 // Detect Run and Submit Buttons to track attempts
