@@ -1,169 +1,127 @@
 import React, { useState } from 'react';
-import { Map, Zap, Send, Bot, User, Code2 } from 'lucide-react';
+import { Map, CheckCircle2, Lock, PlayCircle, X } from 'lucide-react';
+import { roadmapData, phases } from '../data/roadmapData';
 
 export default function Roadmap() {
-  const [prompt, setPrompt] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedQuestion, setGeneratedQuestion] = useState(null);
+  const [selectedNode, setSelectedNode] = useState(null);
 
-  const roadmapTimeline = [
-    { week: 1, title: 'Mastering Graphs: DFS & BFS', status: 'completed', description: 'Deep dive into graph traversals to fix your current conceptual bottleneck.' },
-    { week: 2, title: 'Advanced Graphs: Shortest Path', status: 'current', description: 'Dijkstra\'s and Bellman-Ford algorithms.' },
-    { week: 3, title: 'Dynamic Programming: 1D & 2D', status: 'upcoming', description: 'Tackling your secondary weakness with foundational DP concepts.' },
-    { week: 4, title: 'Trees: Advanced Balancing', status: 'upcoming', description: 'AVL and Red-Black tree properties.' },
-  ];
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'completed': return 'bg-emerald-500 border-emerald-400 text-emerald-900 shadow-emerald-500/20';
+      case 'current': return 'bg-sky-500 border-sky-400 text-sky-900 shadow-sky-500/40 ring-4 ring-sky-500/20';
+      case 'locked': return 'bg-slate-800 border-slate-700 text-slate-400 opacity-70';
+      default: return 'bg-slate-800 border-slate-700 text-slate-400';
+    }
+  };
 
-  const handleGenerate = (e) => {
-    e.preventDefault();
-    if (!prompt.trim()) return;
-    
-    setIsGenerating(true);
-    // Simulate AI generation delay
-    setTimeout(() => {
-      setGeneratedQuestion({
-        title: "The Cursed Graph of Nodes",
-        difficulty: "Hard",
-        description: "You are given an undirected graph with `n` nodes labeled from `0` to `n - 1`. You are also given a 2D integer array `edges` where `edges[i] = [u_i, v_i]` indicates that there is an edge between nodes `u_i` and `v_i`.\n\nA node is considered **cursed** if it is part of a cycle of length 3. Return the total number of connected components that contain at least one cursed node.",
-        constraints: [
-          "`1 <= n <= 10^5`",
-          "`0 <= edges.length <= 10^5`",
-          "`edges[i].length == 2`",
-          "There are no repeated edges or self-loops."
-        ]
-      });
-      setIsGenerating(false);
-      setPrompt('');
-    }, 2000);
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'completed': return <CheckCircle2 size={18} />;
+      case 'current': return <PlayCircle size={18} />;
+      case 'locked': return <Lock size={18} />;
+      default: return null;
+    }
   };
 
   return (
-    <div className="min-h-screen p-6 md:p-12">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <div className="min-h-screen p-6 md:p-12 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto relative z-10">
         
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold text-white mb-2 flex items-center gap-3">
-            <Map className="text-purple-400" size={32} /> Personalized Roadmap & AI Generator
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 flex items-center justify-center gap-3">
+            <Map className="text-purple-400" size={40} /> DSA Mastery Roadmap
           </h1>
-          <p className="text-slate-400">Follow your custom timeline or generate unique problems on the fly using Gemini AI.</p>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            Your step-by-step path to cracking product companies. Follow the curriculum from top to bottom.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
-          {/* Personalized Roadmap Timeline */}
-          <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl border-t-4 border-t-purple-500">
-            <h2 className="text-xl font-semibold text-slate-200 mb-8 flex items-center gap-2">
-              <Map className="text-purple-400" /> Study Roadmap
-            </h2>
-            
-            <div className="relative border-l-2 border-slate-700 ml-3 space-y-10">
-              {roadmapTimeline.map((item, index) => (
-                <div key={index} className="relative pl-8">
-                  {/* Timeline Dot */}
-                  <div className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 ${
-                    item.status === 'completed' ? 'bg-emerald-500 border-emerald-900' :
-                    item.status === 'current' ? 'bg-sky-500 border-sky-900 ring-4 ring-sky-500/20' :
-                    'bg-slate-700 border-slate-900'
-                  }`}></div>
+        {/* Roadmap Tree */}
+        <div className="space-y-16">
+          {phases.map((phase, pIndex) => {
+            const phaseNodes = roadmapData.filter(n => n.phase === phase.id);
+            return (
+              <div key={phase.id} className="relative">
+                {/* Phase Header */}
+                <div className="bg-slate-900/80 border border-purple-500/30 p-6 rounded-2xl mb-12 text-center relative z-10 backdrop-blur-sm">
+                  <h2 className="text-2xl font-bold text-purple-400 mb-2">{phase.title}</h2>
+                  <p className="text-slate-400">{phase.description}</p>
+                </div>
+
+                {/* Nodes Grid */}
+                <div className="relative flex flex-col items-center gap-8">
+                  {/* Central Spine */}
+                  <div className="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-1 bg-slate-800 -z-10"></div>
                   
-                  <div className="text-xs font-bold uppercase tracking-wider mb-1 text-slate-500">Week {item.week}</div>
-                  <h3 className={`text-lg font-bold mb-2 ${
-                    item.status === 'completed' ? 'text-slate-300' :
-                    item.status === 'current' ? 'text-sky-400' :
-                    'text-slate-400'
-                  }`}>{item.title}</h3>
-                  <p className="text-sm text-slate-400">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* AI Question Generation Studio */}
-          <div className="bg-slate-800 p-6 rounded-2xl border border-slate-700 shadow-xl flex flex-col h-[600px]">
-            <h2 className="text-xl font-semibold text-slate-200 mb-6 flex items-center gap-2">
-              <Zap className="text-amber-400" /> AI Practice Studio
-            </h2>
-
-            {/* Chat/Output Area */}
-            <div className="flex-1 overflow-y-auto mb-6 bg-slate-900/50 rounded-xl border border-slate-700/50 p-4 space-y-6">
-              
-              <div className="flex gap-4">
-                <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
-                  <Bot size={18} className="text-indigo-400" />
-                </div>
-                <div className="bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-slate-700 text-sm text-slate-300">
-                  Hello! I'm your Gemini AI coach. Tell me what you want to practice. For example: "Generate a Medium difficulty question combining Trees and DFS".
+                  {phaseNodes.map((node, i) => {
+                    const isLeft = i % 2 === 0;
+                    return (
+                      <div key={node.id} className={`w-full flex ${isLeft ? 'justify-start md:pr-[50%]' : 'justify-end md:pl-[50%]'} relative`}>
+                        {/* Branch connecting to spine (hidden on mobile, visible on md) */}
+                        <div className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-[10%] border-t-4 border-dashed border-slate-700 -z-10 ${isLeft ? 'right-[40%]' : 'left-[40%]'}`}></div>
+                        
+                        <div 
+                          onClick={() => setSelectedNode(node)}
+                          className={`w-full md:w-[80%] mx-auto md:mx-0 p-5 rounded-xl border-2 cursor-pointer transition-all duration-300 hover:scale-105 shadow-xl ${getStatusColor(node.status)} flex items-center justify-between`}
+                        >
+                          <span className="font-bold text-lg">{node.title}</span>
+                          <span className="opacity-80 flex-shrink-0 ml-4">{getStatusIcon(node.status)}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-
-              {generatedQuestion && (
-                <div className="flex gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center flex-shrink-0 mt-1">
-                    <Bot size={18} className="text-indigo-400" />
-                  </div>
-                  <div className="bg-slate-800 p-5 rounded-2xl rounded-tl-none border border-indigo-500/30 w-full shadow-lg shadow-indigo-500/5">
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                        <Code2 size={20} className="text-indigo-400"/>
-                        {generatedQuestion.title}
-                      </h3>
-                      <span className="text-xs font-bold text-rose-400 bg-rose-400/10 px-2 py-1 rounded border border-rose-400/20">
-                        {generatedQuestion.difficulty}
-                      </span>
-                    </div>
-                    <div className="prose prose-invert prose-sm max-w-none text-slate-300 whitespace-pre-wrap mb-6">
-                      {generatedQuestion.description}
-                    </div>
-                    <div className="bg-slate-900 p-4 rounded-xl border border-slate-700">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Constraints</h4>
-                      <ul className="list-disc list-inside text-sm text-slate-400 space-y-1 font-mono">
-                        {generatedQuestion.constraints.map((c, i) => <li key={i}>{c}</li>)}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {isGenerating && (
-                <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
-                    <Bot size={18} className="text-indigo-400 animate-pulse" />
-                  </div>
-                  <div className="bg-slate-800 p-3 rounded-2xl rounded-tl-none border border-slate-700 flex items-center gap-2">
-                    <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                    <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Input Area */}
-            <form onSubmit={handleGenerate} className="relative">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500">
-                <User size={20} />
-              </div>
-              <input 
-                type="text" 
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Type your request here..."
-                disabled={isGenerating}
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl py-3 pl-10 pr-12 text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all disabled:opacity-50"
-              />
-              <button 
-                type="submit"
-                disabled={isGenerating || !prompt.trim()}
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-indigo-500 hover:bg-indigo-400 text-white p-1.5 rounded-lg transition-colors disabled:opacity-50 disabled:hover:bg-indigo-500"
-              >
-                <Send size={18} />
-              </button>
-            </form>
-          </div>
-
+            );
+          })}
         </div>
 
       </div>
+
+      {/* Modal for Details */}
+      {selectedNode && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className={`p-6 border-b border-slate-800 flex justify-between items-center ${
+              selectedNode.status === 'completed' ? 'bg-emerald-900/20' :
+              selectedNode.status === 'current' ? 'bg-sky-900/20' :
+              'bg-slate-800/50'
+            }`}>
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                {selectedNode.title}
+                <span className="text-slate-400">{getStatusIcon(selectedNode.status)}</span>
+              </h3>
+              <button onClick={() => setSelectedNode(null)} className="text-slate-400 hover:text-white transition-colors">
+                <X size={24} />
+              </button>
+            </div>
+            <div className="p-6">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">Must Solve Problems</h4>
+              {selectedNode.problems && selectedNode.problems.length > 0 ? (
+                <ul className="space-y-3">
+                  {selectedNode.problems.map((prob, idx) => (
+                    <li key={idx} className="flex items-center gap-3 text-slate-300 bg-slate-800/50 p-3 rounded-lg border border-slate-700/50">
+                      <div className="w-2 h-2 rounded-full bg-purple-500"></div>
+                      {prob}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-slate-400 italic">No specific problems listed yet.</p>
+              )}
+              
+              <div className="mt-8">
+                <button 
+                  className={`w-full py-3 rounded-xl font-bold text-white transition-colors ${selectedNode.status === 'locked' ? 'bg-slate-700 cursor-not-allowed' : 'bg-purple-600 hover:bg-purple-500'}`}
+                >
+                  {selectedNode.status === 'locked' ? 'Complete Previous Topics First' : 'Practice These Problems'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

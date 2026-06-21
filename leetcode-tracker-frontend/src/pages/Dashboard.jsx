@@ -3,16 +3,21 @@ import axios from 'axios';
 import { Code, CheckCircle, Clock, X, Brain, AlertCircle } from 'lucide-react';
 
 export default function Dashboard({ token }) {
-  const [data, setData] = useState({ activities: [], profileStats: { totalProblemsSolved: 0, totalTimeSpent: 0, totalAttempts: 0 } });
+  const [data, setData] = useState({ activities: [], profileStats: { totalProblemsSolved: 0, totalTimeSpent: 0, totalAttempts: 0 }, ml: null });
   const [selectedActivity, setSelectedActivity] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('https://dsa-mastery-hub.onrender.com/api/activity/', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const [res, mlRes] = await Promise.all([
+          axios.get('https://dsa-mastery-hub.onrender.com/api/activity/', {
+            headers: { Authorization: `Bearer ${token}` }
+          }),
+          axios.get('https://dsa-mastery-hub.onrender.com/api/ml/analytics', {
+            headers: { Authorization: `Bearer ${token}` }
+          }).catch(e => { console.warn('ML Service unreachable', e); return { data: null }; })
+        ]);
         
         // Calculate total attempts if not provided
         let totalAttempts = res.data.profileStats?.totalAttempts || 0;
@@ -25,7 +30,8 @@ export default function Dashboard({ token }) {
           profileStats: {
             ...res.data.profileStats,
             totalAttempts
-          }
+          },
+          ml: mlRes.data
         });
       } catch (err) {
         console.error("Failed to fetch dashboard data", err);
@@ -71,6 +77,57 @@ export default function Dashboard({ token }) {
           </span>
         </div>
       </div>
+
+      {/* ML Analytics Row */}
+      {data.ml && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-indigo-50 dark:bg-slate-900 border border-indigo-200 dark:border-indigo-500/30 rounded-xl p-6 shadow-sm flex flex-col justify-center">
+            <h3 className="text-sm font-bold text-indigo-600 dark:text-indigo-400 mb-2 flex items-center gap-2">
+              <Brain size={16} /> Interview Readiness
+            </h3>
+            <div className="flex items-end gap-2">
+              <span className="text-4xl font-black text-slate-900 dark:text-white">{data.ml.readinessScore || 0}</span>
+              <span className="text-sm text-slate-500 dark:text-slate-400 mb-1.5">/ 100</span>
+            </div>
+            <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 mt-4">
+              <div className="bg-indigo-500 h-2 rounded-full" style={{ width: `${data.ml.readinessScore || 0}%` }}></div>
+            </div>
+          </div>
+          
+          <div className="bg-rose-50 dark:bg-slate-900 border border-rose-200 dark:border-rose-500/30 rounded-xl p-6 shadow-sm flex flex-col">
+            <h3 className="text-sm font-bold text-rose-600 dark:text-rose-400 mb-4 flex items-center gap-2">
+              <AlertCircle size={16} /> Weak Topics Detected
+            </h3>
+            {data.ml.weakTopics && data.ml.weakTopics.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {data.ml.weakTopics.map(t => (
+                  <span key={t} className="px-3 py-1 bg-rose-200 dark:bg-rose-900/50 text-rose-800 dark:text-rose-300 text-xs font-bold rounded-full">{t}</span>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500 italic">No weak topics detected yet.</p>
+            )}
+          </div>
+          
+          <div className="bg-sky-50 dark:bg-slate-900 border border-sky-200 dark:border-sky-500/30 rounded-xl p-6 shadow-sm flex flex-col">
+            <h3 className="text-sm font-bold text-sky-600 dark:text-sky-400 mb-4 flex items-center gap-2">
+              <CheckCircle size={16} /> Recommended Focus
+            </h3>
+            {data.ml.recommendations && data.ml.recommendations.length > 0 ? (
+              <ul className="space-y-2">
+                {data.ml.recommendations.map(r => (
+                  <li key={r} className="text-sm text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+                    {r}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-slate-500 italic">Keep solving to get recommendations.</p>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Recent Activity Table */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm dark:shadow-none overflow-hidden transition-colors duration-300">
