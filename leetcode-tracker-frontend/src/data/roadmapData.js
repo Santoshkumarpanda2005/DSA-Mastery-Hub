@@ -6,10 +6,10 @@ export const roadmapData = [
     phase: 1,
     status: 'current',
     problems: [
-      'Two Sum (Easy)', 'Best Time to Buy and Sell Stock (Easy)', 'Maximum Subarray (Medium)', 'Contains Duplicate (Easy)', 
-      'Product of Array Except Self (Medium)', 'Move Zeroes (Easy)', 'Merge Sorted Arrays (Easy)', 'Rotate Array (Medium)', 
-      'Find Missing Number (Easy)', 'Majority Element (Easy)', 'Trapping Rain Water (Hard)', 'Container With Most Water (Medium)', 
-      'Spiral Matrix (Medium)', 'Set Matrix Zeroes (Medium)', 'Next Permutation (Medium)'
+      { title: 'Two Sum (Easy)', link: 'https://leetcode.com/problems/two-sum/' }, { title: 'Best Time to Buy and Sell Stock (Easy)', link: 'https://leetcode.com/problems/best-time-to-buy-and-sell-stock/' }, { title: 'Maximum Subarray (Medium)', link: 'https://leetcode.com/problems/maximum-subarray/' }, { title: 'Contains Duplicate (Easy)', link: 'https://leetcode.com/problems/contains-duplicate/' }, 
+      { title: 'Product of Array Except Self (Medium)', link: 'https://leetcode.com/problems/product-of-array-except-self/' }, { title: 'Move Zeroes (Easy)', link: 'https://leetcode.com/problems/move-zeroes/' }, 'Merge Sorted Arrays (Easy)', { title: 'Rotate Array (Medium)', link: 'https://leetcode.com/problems/rotate-array/' }, 
+      { title: 'Find Missing Number (Easy)', link: 'https://leetcode.com/problems/missing-number/' }, { title: 'Majority Element (Easy)', link: 'https://leetcode.com/problems/majority-element/' }, { title: 'Trapping Rain Water (Hard)', link: 'https://leetcode.com/problems/trapping-rain-water/' }, { title: 'Container With Most Water (Medium)', link: 'https://leetcode.com/problems/container-with-most-water/' }, 
+      { title: 'Spiral Matrix (Medium)', link: 'https://leetcode.com/problems/spiral-matrix/' }, { title: 'Set Matrix Zeroes (Medium)', link: 'https://leetcode.com/problems/set-matrix-zeroes/' }, { title: 'Next Permutation (Medium)', link: 'https://leetcode.com/problems/next-permutation/' }
     ]
   },
   {
@@ -18,10 +18,10 @@ export const roadmapData = [
     phase: 1,
     status: 'locked',
     problems: [
-      'Valid Palindrome (Easy)', 'Reverse String (Easy)', 'Longest Common Prefix (Easy)', 'Valid Anagram (Easy)', 
-      'Group Anagrams (Medium)', 'Longest Substring Without Repeating Characters (Medium)', 'String Compression (Medium)', 
-      'Count and Say (Medium)', 'Roman to Integer (Easy)', 'Integer to Roman (Medium)', 'Minimum Window Substring (Hard)', 
-      'Longest Palindromic Substring (Medium)', 'Implement strstr() (Easy)', 'Decode String (Medium)'
+      { title: 'Valid Palindrome (Easy)', link: 'https://leetcode.com/problems/valid-palindrome/' }, { title: 'Reverse String (Easy)', link: 'https://leetcode.com/problems/reverse-string/' }, { title: 'Longest Common Prefix (Easy)', link: 'https://leetcode.com/problems/longest-common-prefix/' }, { title: 'Valid Anagram (Easy)', link: 'https://leetcode.com/problems/valid-anagram/' }, 
+      { title: 'Group Anagrams (Medium)', link: 'https://leetcode.com/problems/group-anagrams/' }, { title: 'Longest Substring Without Repeating Characters (Medium)', link: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/' }, { title: 'String Compression (Medium)', link: 'https://leetcode.com/problems/string-compression/' }, 
+      { title: 'Count and Say (Medium)', link: 'https://leetcode.com/problems/count-and-say/' }, { title: 'Roman to Integer (Easy)', link: 'https://leetcode.com/problems/roman-to-integer/' }, { title: 'Integer to Roman (Medium)', link: 'https://leetcode.com/problems/integer-to-roman/' }, { title: 'Minimum Window Substring (Hard)', link: 'https://leetcode.com/problems/minimum-window-substring/' }, 
+      { title: 'Longest Palindromic Substring (Medium)', link: 'https://leetcode.com/problems/longest-palindromic-substring/' }, 'Implement strstr() (Easy)', { title: 'Decode String (Medium)', link: 'https://leetcode.com/problems/decode-string/' }
     ]
   },
   {
@@ -30,9 +30,9 @@ export const roadmapData = [
     phase: 1,
     status: 'locked',
     problems: [
-      'Maximum Sum Subarray of Size K (Easy)', 'Longest Substring Without Repeating Characters (Medium)', 
-      'Minimum Size Subarray Sum (Medium)', 'Fruits Into Baskets (Medium)', 'Permutation in String (Medium)', 
-      'Sliding Window Maximum (Hard)'
+      'Maximum Sum Subarray of Size K (Easy)', { title: 'Longest Substring Without Repeating Characters (Medium)', link: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/' }, 
+      { title: 'Minimum Size Subarray Sum (Medium)', link: 'https://leetcode.com/problems/minimum-size-subarray-sum/' }, 'Fruits Into Baskets (Medium)', { title: 'Permutation in String (Medium)', link: 'https://leetcode.com/problems/permutation-in-string/' }, 
+      { title: 'Sliding Window Maximum (Hard)', link: 'https://leetcode.com/problems/sliding-window-maximum/' }
     ]
   },
   {
@@ -41,8 +41,8 @@ export const roadmapData = [
     phase: 1,
     status: 'locked',
     problems: [
-      'Two Sum (Easy)', 'Top K Frequent Elements (Medium)', 'Subarray Sum Equals K (Medium)', 'Happy Number (Easy)', 
-      'Longest Consecutive Sequence (Medium)', 'Find Duplicate Number (Medium)', 'First Unique Character (Easy)'
+      { title: 'Two Sum (Easy)', link: 'https://leetcode.com/problems/two-sum/' }, { title: 'Top K Frequent Elements (Medium)', link: 'https://leetcode.com/problems/top-k-frequent-elements/' }, { title: 'Subarray Sum Equals K (Medium)', link: 'https://leetcode.com/problems/subarray-sum-equals-k/' }, { title: 'Happy Number (Easy)', link: 'https://leetcode.com/problems/happy-number/' }, 
+      { title: 'Longest Consecutive Sequence (Medium)', link: 'https://leetcode.com/problems/longest-consecutive-sequence/' }, 'Find Duplicate Number (Medium)', 'First Unique Character (Easy)'
     ]
   },
   {
@@ -51,9 +51,9 @@ export const roadmapData = [
     phase: 1,
     status: 'locked',
     problems: [
-      'Reverse Linked List (Easy)', 'Detect Cycle in Linked List (Easy)', 'Merge Two Sorted Lists (Easy)', 
-      'Middle of Linked List (Easy)', 'Remove Nth Node From End (Medium)', 'Palindrome Linked List (Easy)', 
-      'Intersection of Two Linked Lists (Easy)', 'Copy List with Random Pointer (Hard)', 'LRU Cache (Hard)'
+      { title: 'Reverse Linked List (Easy)', link: 'https://leetcode.com/problems/reverse-linked-list/' }, 'Detect Cycle in Linked List (Easy)', { title: 'Merge Two Sorted Lists (Easy)', link: 'https://leetcode.com/problems/merge-two-sorted-lists/' }, 
+      'Middle of Linked List (Easy)', 'Remove Nth Node From End (Medium)', { title: 'Palindrome Linked List (Easy)', link: 'https://leetcode.com/problems/palindrome-linked-list/' }, 
+      { title: 'Intersection of Two Linked Lists (Easy)', link: 'https://leetcode.com/problems/intersection-of-two-linked-lists/' }, { title: 'Copy List with Random Pointer (Hard)', link: 'https://leetcode.com/problems/copy-list-with-random-pointer/' }, { title: 'LRU Cache (Hard)', link: 'https://leetcode.com/problems/lru-cache/' }
     ]
   },
   {
@@ -62,8 +62,8 @@ export const roadmapData = [
     phase: 1,
     status: 'locked',
     problems: [
-      'Valid Parentheses (Easy)', 'Min Stack (Medium)', 'Implement Queue using Stacks (Easy)', 'Daily Temperatures (Medium)', 
-      'Next Greater Element (Easy)', 'Largest Rectangle in Histogram (Hard)', 'Evaluate Reverse Polish Notation (Medium)'
+      { title: 'Valid Parentheses (Easy)', link: 'https://leetcode.com/problems/valid-parentheses/' }, { title: 'Min Stack (Medium)', link: 'https://leetcode.com/problems/min-stack/' }, { title: 'Implement Queue using Stacks (Easy)', link: 'https://leetcode.com/problems/implement-queue-using-stacks/' }, { title: 'Daily Temperatures (Medium)', link: 'https://leetcode.com/problems/daily-temperatures/' }, 
+      'Next Greater Element (Easy)', { title: 'Largest Rectangle in Histogram (Hard)', link: 'https://leetcode.com/problems/largest-rectangle-in-histogram/' }, { title: 'Evaluate Reverse Polish Notation (Medium)', link: 'https://leetcode.com/problems/evaluate-reverse-polish-notation/' }
     ]
   },
 
@@ -74,9 +74,9 @@ export const roadmapData = [
     phase: 2,
     status: 'locked',
     problems: [
-      'Binary Search (Easy)', 'Search Insert Position (Easy)', 'First and Last Position in Sorted Array (Medium)', 
-      'Search in Rotated Sorted Array (Medium)', 'Find Peak Element (Medium)', 'Median of Two Sorted Arrays (Hard)', 
-      'Koko Eating Bananas (Medium)'
+      { title: 'Binary Search (Easy)', link: 'https://leetcode.com/problems/binary-search/' }, { title: 'Search Insert Position (Easy)', link: 'https://leetcode.com/problems/search-insert-position/' }, 'First and Last Position in Sorted Array (Medium)', 
+      { title: 'Search in Rotated Sorted Array (Medium)', link: 'https://leetcode.com/problems/search-in-rotated-sorted-array/' }, { title: 'Find Peak Element (Medium)', link: 'https://leetcode.com/problems/find-peak-element/' }, { title: 'Median of Two Sorted Arrays (Hard)', link: 'https://leetcode.com/problems/median-of-two-sorted-arrays/' }, 
+      { title: 'Koko Eating Bananas (Medium)', link: 'https://leetcode.com/problems/koko-eating-bananas/' }
     ]
   },
   {
@@ -85,8 +85,8 @@ export const roadmapData = [
     phase: 2,
     status: 'locked',
     problems: [
-      'Subsets (Medium)', 'Permutations (Medium)', 'Combination Sum (Medium)', 'Generate Parentheses (Medium)', 
-      'N Queens (Hard)', 'Sudoku Solver (Hard)', 'Letter Combinations of Phone Number (Medium)'
+      { title: 'Subsets (Medium)', link: 'https://leetcode.com/problems/subsets/' }, { title: 'Permutations (Medium)', link: 'https://leetcode.com/problems/permutations/' }, { title: 'Combination Sum (Medium)', link: 'https://leetcode.com/problems/combination-sum/' }, { title: 'Generate Parentheses (Medium)', link: 'https://leetcode.com/problems/generate-parentheses/' }, 
+      'N Queens (Hard)', { title: 'Sudoku Solver (Hard)', link: 'https://leetcode.com/problems/sudoku-solver/' }, 'Letter Combinations of Phone Number (Medium)'
     ]
   },
   {
@@ -95,9 +95,9 @@ export const roadmapData = [
     phase: 2,
     status: 'locked',
     problems: [
-      'Maximum Depth of Binary Tree (Easy)', 'Inorder Traversal (Easy)', 'Level Order Traversal (Medium)', 
-      'Diameter of Binary Tree (Easy)', 'Validate BST (Medium)', 'Lowest Common Ancestor (Medium)', 'Symmetric Tree (Easy)', 
-      'Path Sum (Easy)', 'Serialize and Deserialize Binary Tree (Hard)'
+      { title: 'Maximum Depth of Binary Tree (Easy)', link: 'https://leetcode.com/problems/maximum-depth-of-binary-tree/' }, 'Inorder Traversal (Easy)', 'Level Order Traversal (Medium)', 
+      { title: 'Diameter of Binary Tree (Easy)', link: 'https://leetcode.com/problems/diameter-of-binary-tree/' }, 'Validate BST (Medium)', { title: 'Lowest Common Ancestor (Medium)', link: 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/' }, { title: 'Symmetric Tree (Easy)', link: 'https://leetcode.com/problems/symmetric-tree/' }, 
+      { title: 'Path Sum (Easy)', link: 'https://leetcode.com/problems/path-sum/' }, 'Serialize and Deserialize Binary Tree (Hard)'
     ]
   },
   {
@@ -107,7 +107,7 @@ export const roadmapData = [
     status: 'locked',
     problems: [
       'Search in BST (Easy)', 'Insert into BST (Medium)', 'Delete Node in BST (Medium)', 'Kth Smallest Element in BST (Medium)', 
-      'Convert Sorted Array to BST (Easy)'
+      { title: 'Convert Sorted Array to BST (Easy)', link: 'https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/' }
     ]
   },
   {
@@ -116,8 +116,8 @@ export const roadmapData = [
     phase: 2,
     status: 'locked',
     problems: [
-      'Kth Largest Element (Medium)', 'Top K Frequent Elements (Medium)', 'Merge K Sorted Lists (Hard)', 
-      'Find Median from Data Stream (Hard)', 'Task Scheduler (Medium)'
+      { title: 'Kth Largest Element (Medium)', link: 'https://leetcode.com/problems/kth-largest-element-in-an-array/' }, { title: 'Top K Frequent Elements (Medium)', link: 'https://leetcode.com/problems/top-k-frequent-elements/' }, 'Merge K Sorted Lists (Hard)', 
+      { title: 'Find Median from Data Stream (Hard)', link: 'https://leetcode.com/problems/find-median-from-data-stream/' }, { title: 'Task Scheduler (Medium)', link: 'https://leetcode.com/problems/task-scheduler/' }
     ]
   },
 
@@ -128,8 +128,8 @@ export const roadmapData = [
     phase: 3,
     status: 'locked',
     problems: [
-      'Number of Islands (Medium)', 'Clone Graph (Medium)', 'Course Schedule (Medium)', 'BFS Traversal (Easy)', 
-      'DFS Traversal (Easy)', 'Rotten Oranges (Medium)', 'Word Ladder (Hard)', 'Dijkstra Algorithm (Hard)', 'Flood Fill (Easy)'
+      { title: 'Number of Islands (Medium)', link: 'https://leetcode.com/problems/number-of-islands/' }, { title: 'Clone Graph (Medium)', link: 'https://leetcode.com/problems/clone-graph/' }, { title: 'Course Schedule (Medium)', link: 'https://leetcode.com/problems/course-schedule/' }, 'BFS Traversal (Easy)', 
+      'DFS Traversal (Easy)', 'Rotten Oranges (Medium)', { title: 'Word Ladder (Hard)', link: 'https://leetcode.com/problems/word-ladder/' }, 'Dijkstra Algorithm (Hard)', { title: 'Flood Fill (Easy)', link: 'https://leetcode.com/problems/flood-fill/' }
     ]
   },
   {
@@ -138,9 +138,9 @@ export const roadmapData = [
     phase: 3,
     status: 'locked',
     problems: [
-      'Climbing Stairs (Easy)', 'House Robber (Medium)', 'Coin Change (Medium)', 'Longest Increasing Subsequence (Medium)', 
-      'Longest Common Subsequence (Medium)', '0/1 Knapsack (Medium)', 'Partition Equal Subset Sum (Medium)', 
-      'Edit Distance (Hard)', 'DP Fibonacci (Easy)'
+      { title: 'Climbing Stairs (Easy)', link: 'https://leetcode.com/problems/climbing-stairs/' }, { title: 'House Robber (Medium)', link: 'https://leetcode.com/problems/house-robber/' }, { title: 'Coin Change (Medium)', link: 'https://leetcode.com/problems/coin-change/' }, { title: 'Longest Increasing Subsequence (Medium)', link: 'https://leetcode.com/problems/longest-increasing-subsequence/' }, 
+      { title: 'Longest Common Subsequence (Medium)', link: 'https://leetcode.com/problems/longest-common-subsequence/' }, '0/1 Knapsack (Medium)', { title: 'Partition Equal Subset Sum (Medium)', link: 'https://leetcode.com/problems/partition-equal-subset-sum/' }, 
+      { title: 'Edit Distance (Hard)', link: 'https://leetcode.com/problems/edit-distance/' }, 'DP Fibonacci (Easy)'
     ]
   },
   {
@@ -149,7 +149,7 @@ export const roadmapData = [
     phase: 3,
     status: 'locked',
     problems: [
-      'Jump Game (Medium)', 'Gas Station (Medium)', 'Assign Cookies (Easy)', 'Non Overlapping Intervals (Medium)', 
+      { title: 'Jump Game (Medium)', link: 'https://leetcode.com/problems/jump-game/' }, { title: 'Gas Station (Medium)', link: 'https://leetcode.com/problems/gas-station/' }, { title: 'Assign Cookies (Easy)', link: 'https://leetcode.com/problems/assign-cookies/' }, 'Non Overlapping Intervals (Medium)', 
       'Activity Selection (Medium)'
     ]
   },
@@ -159,7 +159,7 @@ export const roadmapData = [
     phase: 3,
     status: 'locked',
     problems: [
-      'Single Number (Easy)', 'Counting Bits (Easy)', 'Number of 1 Bits (Easy)', 'Missing Number (Easy)', 'Reverse Bits (Easy)'
+      { title: 'Single Number (Easy)', link: 'https://leetcode.com/problems/single-number/' }, { title: 'Counting Bits (Easy)', link: 'https://leetcode.com/problems/counting-bits/' }, { title: 'Number of 1 Bits (Easy)', link: 'https://leetcode.com/problems/number-of-1-bits/' }, { title: 'Missing Number (Easy)', link: 'https://leetcode.com/problems/missing-number/' }, { title: 'Reverse Bits (Easy)', link: 'https://leetcode.com/problems/reverse-bits/' }
     ]
   },
 
@@ -170,7 +170,7 @@ export const roadmapData = [
     phase: 4,
     status: 'locked',
     problems: [
-      'Second Highest Salary', 'Employees Earning More Than Managers', 'Duplicate Emails', 
+      { title: 'Second Highest Salary', link: 'https://leetcode.com/problems/second-highest-salary/' }, { title: 'Employees Earning More Than Managers', link: 'https://leetcode.com/problems/employees-earning-more-than-their-managers/' }, { title: 'Duplicate Emails', link: 'https://leetcode.com/problems/duplicate-emails/' }, 
       'Top 3 Salaries by Department', 'Monthly Revenue Report'
     ]
   },

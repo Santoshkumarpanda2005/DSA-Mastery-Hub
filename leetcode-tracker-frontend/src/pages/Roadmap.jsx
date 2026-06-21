@@ -106,12 +106,23 @@ export default function Roadmap() {
               <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">Must Solve Problems</h4>
               {selectedNode.problems && selectedNode.problems.length > 0 ? (
                 <ul className="space-y-3">
-                  {selectedNode.problems.map((prob, idx) => (
-                    <li key={idx} className="flex items-center gap-3 text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-200 dark:border-slate-700/50">
-                      <div className="w-2 h-2 rounded-full bg-purple-500"></div>
-                      {prob}
-                    </li>
-                  ))}
+                  {selectedNode.problems.map((prob, idx) => {
+                    const isObj = typeof prob === 'object' && prob !== null;
+                    const title = isObj ? prob.title : prob;
+                    const link = isObj ? prob.link : null;
+                    return (
+                      <li key={idx} className="flex items-center gap-3 text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-200 dark:border-slate-700/50">
+                        <div className="w-2 h-2 flex-shrink-0 rounded-full bg-purple-500"></div>
+                        {link ? (
+                          <a href={link} target="_blank" rel="noreferrer" className="hover:text-purple-600 dark:hover:text-purple-400 hover:underline transition-colors block w-full">
+                            {title}
+                          </a>
+                        ) : (
+                          <span className="block w-full">{title}</span>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               ) : (
                 <p className="text-slate-500 dark:text-slate-400 italic">No specific problems listed yet.</p>
