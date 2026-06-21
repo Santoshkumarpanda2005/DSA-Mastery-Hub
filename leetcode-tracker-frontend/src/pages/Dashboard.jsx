@@ -255,7 +255,7 @@ export default function Dashboard({ token }) {
                             return (
                               <li key={i} className="bg-white dark:bg-slate-900 border border-sky-100 dark:border-slate-700 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-200 text-sm hover:border-sky-300 dark:hover:border-sky-500 transition-colors cursor-pointer">
                                 {link ? (
-                                  <a href={link} target="_blank" rel="noreferrer" className="text-sky-600 dark:text-sky-400 hover:underline block w-full">{title}</a>
+                                  <a href={link} target="_blank" rel="noreferrer" className="hover:underline block w-full">{title}</a>
                                 ) : (
                                   title
                                 )}
