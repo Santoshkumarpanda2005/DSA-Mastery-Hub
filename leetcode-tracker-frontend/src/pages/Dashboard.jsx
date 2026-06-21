@@ -135,9 +135,16 @@ export default function Dashboard({ token }) {
                           Accepted
                         </span>
                       ) : (
-                        <span className="bg-rose-500 text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-sm">
-                          {act.submissionStatus || 'Time Limit Exceeded'}
-                        </span>
+                        <div className="flex flex-col gap-1 items-start">
+                          <span className="bg-rose-500 text-white text-xs font-bold px-2.5 py-1 rounded-md shadow-sm">
+                            {act.submissionStatus || 'Failed'}
+                          </span>
+                          {(act.compileError || act.runtimeError) && (
+                            <div className="mt-1 max-w-[200px] max-h-16 overflow-hidden text-ellipsis text-[10px] bg-slate-900 text-rose-300 p-1.5 rounded border border-rose-900/50" title={act.compileError || act.runtimeError}>
+                              {act.compileError || act.runtimeError}
+                            </div>
+                          )}
+                        </div>
                       )}
                     </td>
                   </tr>

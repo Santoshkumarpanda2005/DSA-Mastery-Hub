@@ -54,8 +54,8 @@ if (!window.leetcodeTrackerInjected) {
     window.addEventListener("message", async (event) => {
         if (event.source !== window) return;
         
-        if (event.data.type === "LEETCODE_ACCEPTED") {
-            console.log("LeetCode Tracker: Received ACCEPTED payload from network intercept.");
+        if (event.data.type === "LEETCODE_SUBMISSION") {
+            console.log("LeetCode Tracker: Received SUBMISSION payload from network intercept.");
             
             let interceptedData = event.data.data;
             let timeSpent = Math.floor((Date.now() - startTime) / 1000);
@@ -72,7 +72,10 @@ if (!window.leetcodeTrackerInjected) {
                 topic: details.topics,
                 timeSpent,
                 attempts,
-                accepted: true,
+                accepted: interceptedData.status_msg === "Accepted",
+                submissionStatus: interceptedData.status_msg,
+                compileError: interceptedData.compile_error,
+                runtimeError: interceptedData.runtime_error,
                 runtime: interceptedData.runtime,
                 memory: interceptedData.memory,
                 code: interceptedData.code,

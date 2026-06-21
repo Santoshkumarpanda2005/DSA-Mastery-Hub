@@ -298,15 +298,22 @@ export default function Profile({ token }) {
               {recentActivities.length > 0 ? (
                 <ul className="space-y-3">
                   {recentActivities.map(act => (
-                    <li key={act._id} className="text-sm font-medium text-slate-700 dark:text-slate-300 flex justify-between">
+                    <li key={act._id} className="text-sm font-medium text-slate-700 dark:text-slate-300 flex justify-between items-center">
                       <span className="truncate">{act.problemName}</span>
-                      <span className={`text-xs px-2 py-0.5 rounded ${
-                        act.difficulty === "Easy" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400" : 
-                        act.difficulty === "Medium" ? "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400" : 
-                        "bg-rose-100 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400"
-                      }`}>
-                        {act.difficulty}
-                      </span>
+                      <div className="flex gap-2 items-center">
+                        {!act.accepted && (
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400">
+                            {act.submissionStatus || 'Failed'}
+                          </span>
+                        )}
+                        <span className={`text-xs px-2 py-0.5 rounded ${
+                          act.difficulty === "Easy" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400" : 
+                          act.difficulty === "Medium" ? "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400" : 
+                          "bg-rose-100 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400"
+                        }`}>
+                          {act.difficulty}
+                        </span>
+                      </div>
                     </li>
                   ))}
                 </ul>

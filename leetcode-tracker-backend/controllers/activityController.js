@@ -7,7 +7,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 exports.trackActivity = async (req, res) => {
     try {
-        const { problemName, difficulty, topic, timeSpent, attempts, accepted, runtime, memory, code, language } = req.body;
+        const { problemName, difficulty, topic, timeSpent, attempts, accepted, submissionStatus, compileError, runtimeError, runtime, memory, code, language } = req.body;
         const userId = req.user.sub; // From authMiddleware
 
         console.log(`--- Received activity data for: ${problemName} ---`);
@@ -16,7 +16,7 @@ exports.trackActivity = async (req, res) => {
         let spaceComplexity = "Unknown";
         let recommendedProblems = [];
 
-        if (code && code.trim() !== "") {
+        if (accepted && code && code.trim() !== "") {
             try {
                 console.log("Analyzing code complexity with Gemini...");
                 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
@@ -53,6 +53,9 @@ ${code}`;
             activity.attempts += (attempts || 1);
             // If it becomes accepted or was already accepted, keep it true
             activity.accepted = accepted || activity.accepted;
+            activity.submissionStatus = submissionStatus || activity.submissionStatus;
+            activity.compileError = compileError || activity.compileError;
+            activity.runtimeError = runtimeError || activity.runtimeError;
 
             if (runtime) activity.runtime = runtime;
             if (memory) activity.memory = memory;
@@ -76,6 +79,9 @@ ${code}`;
                 timeSpent: timeSpent || 0,
                 attempts: attempts || 1,
                 accepted,
+                submissionStatus,
+                compileError,
+                runtimeError,
                 runtime,
                 memory,
                 code,

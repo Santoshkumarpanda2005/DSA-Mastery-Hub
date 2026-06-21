@@ -40,16 +40,19 @@ window.fetch = async (...args) => {
             const clone = response.clone();
             const data = await clone.json();
 
-            if (data && data.state === 'SUCCESS' && data.status_msg === 'Accepted') {
-                console.log('LeetCode Tracker: Intercepted Accepted Result!', data);
+            if (data && data.state === 'SUCCESS') {
+                console.log('LeetCode Tracker: Intercepted Result!', data);
 
                 // Only send if we actually captured the code for this submission
                 if (lastSubmission.code) {
                     window.postMessage({
-                        type: 'LEETCODE_ACCEPTED',
+                        type: 'LEETCODE_SUBMISSION',
                         data: {
                             code: lastSubmission.code,
                             language: lastSubmission.lang,
+                            status_msg: data.status_msg,
+                            compile_error: data.compile_error || null,
+                            runtime_error: data.runtime_error || null,
                             runtime: data.status_runtime || "Unknown ms",
                             memory: data.status_memory || "Unknown MB"
                         }
