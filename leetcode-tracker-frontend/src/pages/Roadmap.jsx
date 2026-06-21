@@ -86,7 +86,7 @@ export default function Roadmap() {
           onClick={() => setSelectedNode(null)}
         >
           <div 
-            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden animate-in zoom-in-95 duration-200"
+            className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl w-full max-w-md max-h-[85vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             <div className={`p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center ${
@@ -102,8 +102,8 @@ export default function Roadmap() {
                 <X size={24} />
               </button>
             </div>
-            <div className="p-6">
-              <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4">Must Solve Problems</h4>
+            <div className="p-6 overflow-y-auto flex-1">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 sticky top-0 bg-white dark:bg-slate-900 pb-2 z-10">Must Solve Problems</h4>
               {selectedNode.problems && selectedNode.problems.length > 0 ? (
                 <ul className="space-y-3">
                   {selectedNode.problems.map((prob, idx) => (
