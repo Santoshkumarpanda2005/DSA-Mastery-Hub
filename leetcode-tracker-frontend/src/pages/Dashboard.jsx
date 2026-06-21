@@ -200,38 +200,51 @@ export default function Dashboard({ token }) {
 
               {/* AI Insights Sidebar */}
               <div className="space-y-6">
-                <div className="bg-indigo-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-indigo-200 dark:border-indigo-500/30">
-                  <h3 className="text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-2 mb-4">
-                    <Brain size={20} /> AI Analysis
-                  </h3>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="text-xs text-indigo-500/70 dark:text-indigo-400/70 uppercase tracking-wider font-bold mb-1">Time Complexity</div>
-                      <div className="text-slate-900 dark:text-slate-200 font-mono bg-white dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-indigo-100 dark:border-slate-700">{selectedActivity.timeComplexity || 'O(?)'}</div>
+                {selectedActivity.accepted ? (
+                  <>
+                    <div className="bg-indigo-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-indigo-200 dark:border-indigo-500/30">
+                      <h3 className="text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-2 mb-4">
+                        <Brain size={20} /> AI Analysis
+                      </h3>
+                      <div className="space-y-4">
+                        <div>
+                          <div className="text-xs text-indigo-500/70 dark:text-indigo-400/70 uppercase tracking-wider font-bold mb-1">Time Complexity</div>
+                          <div className="text-slate-900 dark:text-slate-200 font-mono bg-white dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-indigo-100 dark:border-slate-700">{selectedActivity.timeComplexity || 'O(?)'}</div>
+                        </div>
+                        <div>
+                          <div className="text-xs text-indigo-500/70 dark:text-indigo-400/70 uppercase tracking-wider font-bold mb-1">Space Complexity</div>
+                          <div className="text-slate-900 dark:text-slate-200 font-mono bg-white dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-indigo-100 dark:border-slate-700">{selectedActivity.spaceComplexity || 'O(?)'}</div>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-xs text-indigo-500/70 dark:text-indigo-400/70 uppercase tracking-wider font-bold mb-1">Space Complexity</div>
-                      <div className="text-slate-900 dark:text-slate-200 font-mono bg-white dark:bg-slate-900 px-3 py-1.5 rounded-lg border border-indigo-100 dark:border-slate-700">{selectedActivity.spaceComplexity || 'O(?)'}</div>
+
+                    <div className="bg-sky-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-sky-200 dark:border-sky-500/30">
+                      <h3 className="text-sky-600 dark:text-sky-400 font-bold flex items-center gap-2 mb-4">
+                        <AlertCircle size={20} /> Recommendations
+                      </h3>
+                      {!selectedActivity.recommendations || selectedActivity.recommendations.length === 0 ? (
+                        <p className="text-slate-500 dark:text-slate-400 text-sm italic">No specific recommendations for this problem.</p>
+                      ) : (
+                        <ul className="space-y-2">
+                          {selectedActivity.recommendations.map((rec, i) => (
+                            <li key={i} className="bg-white dark:bg-slate-900 border border-sky-100 dark:border-slate-700 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-200 text-sm hover:border-sky-300 dark:hover:border-sky-500 transition-colors cursor-pointer">
+                              {rec}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <div className="bg-amber-50 dark:bg-amber-900/10 p-5 rounded-2xl border border-amber-200 dark:border-amber-500/30">
+                    <h3 className="text-amber-600 dark:text-amber-400 font-bold flex items-center gap-2 mb-4">
+                      <Brain size={20} /> AI Debugging Hint
+                    </h3>
+                    <div className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                      {selectedActivity.aiHint ? selectedActivity.aiHint : "No AI hint available for this submission. The AI may be analyzing it now, try refreshing in a moment."}
                     </div>
                   </div>
-                </div>
-
-                <div className="bg-sky-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-sky-200 dark:border-sky-500/30">
-                  <h3 className="text-sky-600 dark:text-sky-400 font-bold flex items-center gap-2 mb-4">
-                    <AlertCircle size={20} /> Recommendations
-                  </h3>
-                  {!selectedActivity.recommendations || selectedActivity.recommendations.length === 0 ? (
-                    <p className="text-slate-500 dark:text-slate-400 text-sm italic">No specific recommendations for this problem.</p>
-                  ) : (
-                    <ul className="space-y-2">
-                      {selectedActivity.recommendations.map((rec, i) => (
-                        <li key={i} className="bg-white dark:bg-slate-900 border border-sky-100 dark:border-slate-700 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-200 text-sm hover:border-sky-300 dark:hover:border-sky-500 transition-colors cursor-pointer">
-                          {rec}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
+                )}
               </div>
 
             </div>

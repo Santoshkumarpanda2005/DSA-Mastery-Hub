@@ -17,7 +17,8 @@ const activityLogSchema = new mongoose.Schema({
     language: { type: String },
     timeComplexity: { type: String },
     spaceComplexity: { type: String },
-    recommendations: [{ type: String }]
+    recommendations: [{ type: String }],
+    aiHint: { type: String }
 }, { timestamps: true });
 
 const ActivityLog = mongoose.models.ActivityLog || mongoose.model('ActivityLog', activityLogSchema, 'activities');

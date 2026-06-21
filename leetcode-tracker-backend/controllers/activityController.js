@@ -15,18 +15,30 @@ exports.trackActivity = async (req, res) => {
         let timeComplexity = "Unknown";
         let spaceComplexity = "Unknown";
         let recommendedProblems = [];
+        let aiHint = null;
 
-        if (accepted && code && code.trim() !== "") {
+        if (code && code.trim() !== "") {
             try {
-                console.log("Analyzing code complexity with Gemini...");
+                console.log("Analyzing code with Gemini...");
                 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
-                const prompt = `Analyze the following code snippet and determine its time and space complexity in Big-O notation. 
+                
+                let prompt = "";
+                if (accepted) {
+                    prompt = `Analyze the following code snippet and determine its time and space complexity in Big-O notation. 
 Then, based on the problem topics (${topic.join(', ')}), recommend exactly 3 related LeetCode problems.
 Return ONLY a valid JSON object with the exact keys "timeComplexity", "spaceComplexity", and "recommendedProblems" (array of strings). 
 Do not include any other text, markdown formatting, or explanations.
 
 Code:
 ${code}`;
+                } else {
+                    prompt = `The following code resulted in a ${submissionStatus || "failed submission"}. Provide a short, single-paragraph hint or suggestion to fix the problem without giving away the complete solution. 
+Return ONLY a valid JSON object with the exact key "hint" (string).
+Do not include any other text, markdown formatting, or explanations.
+
+Code:
+${code}`;
+                }
 
                 const result = await model.generateContent(prompt);
                 const response = result.response.text();
@@ -34,9 +46,13 @@ ${code}`;
                 const cleanJsonStr = response.replace(/```json/g, '').replace(/```/g, '').trim();
                 const aiResult = JSON.parse(cleanJsonStr);
 
-                timeComplexity = aiResult.timeComplexity || "Unknown";
-                spaceComplexity = aiResult.spaceComplexity || "Unknown";
-                recommendedProblems = aiResult.recommendedProblems || [];
+                if (accepted) {
+                    timeComplexity = aiResult.timeComplexity || "Unknown";
+                    spaceComplexity = aiResult.spaceComplexity || "Unknown";
+                    recommendedProblems = aiResult.recommendedProblems || [];
+                } else {
+                    aiHint = aiResult.hint || null;
+                }
             } catch (aiError) {
                 console.error("Error calling Gemini API:", aiError.message || aiError);
             }
@@ -56,6 +72,7 @@ ${code}`;
             activity.submissionStatus = submissionStatus || activity.submissionStatus;
             activity.compileError = compileError || activity.compileError;
             activity.runtimeError = runtimeError || activity.runtimeError;
+            if (aiHint) activity.aiHint = aiHint;
 
             if (runtime) activity.runtime = runtime;
             if (memory) activity.memory = memory;
@@ -88,7 +105,8 @@ ${code}`;
                 language,
                 timeComplexity,
                 spaceComplexity,
-                recommendations: recommendedProblems
+                recommendations: recommendedProblems,
+                aiHint
             });
             await activity.save();
         }
