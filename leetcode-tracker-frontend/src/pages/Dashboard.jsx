@@ -186,16 +186,38 @@ export default function Dashboard({ token }) {
             {/* Modal Body */}
             <div className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
               
-              {/* Code Block */}
-              <div className="lg:col-span-2 space-y-4">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-sky-400 flex items-center gap-2">
-                  <Code size={20} className="text-slate-500 dark:text-sky-400" /> Submitted Code ({selectedActivity.language})
-                </h3>
-                <div className="bg-slate-50 dark:bg-slate-950 rounded-xl p-4 border border-slate-200 dark:border-slate-800 overflow-x-auto">
-                  <pre className="text-slate-800 dark:text-slate-300 font-mono text-sm">
-                    <code>{selectedActivity.code || "// No code available"}</code>
-                  </pre>
+              {/* Code Block & Review */}
+              <div className="lg:col-span-2 space-y-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-sky-400 flex items-center gap-2">
+                    <Code size={20} className="text-slate-500 dark:text-sky-400" /> Submitted Code ({selectedActivity.language})
+                  </h3>
+                  <div className="bg-slate-50 dark:bg-slate-950 rounded-xl p-4 border border-slate-200 dark:border-slate-800 overflow-x-auto">
+                    <pre className="text-slate-800 dark:text-slate-300 font-mono text-sm">
+                      <code>{selectedActivity.code || "// No code available"}</code>
+                    </pre>
+                  </div>
                 </div>
+
+                {/* AI Code Review */}
+                {selectedActivity.review && (
+                  <div className="bg-slate-50 dark:bg-[#1e1e1e] rounded-xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-slate-200 mb-4">Review</h3>
+                    <p className="text-slate-700 dark:text-slate-300 text-sm mb-6 leading-relaxed">
+                      {selectedActivity.review.summary}
+                    </p>
+                    {selectedActivity.review.suggestions && selectedActivity.review.suggestions.length > 0 && (
+                      <ul className="space-y-4">
+                        {selectedActivity.review.suggestions.map((sug, i) => (
+                          <li key={i} className="flex gap-3 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            <span className="text-slate-400 dark:text-slate-500 mt-1">•</span>
+                            <span>{sug}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* AI Insights Sidebar */}
@@ -226,11 +248,20 @@ export default function Dashboard({ token }) {
                         <p className="text-slate-500 dark:text-slate-400 text-sm italic">No specific recommendations for this problem.</p>
                       ) : (
                         <ul className="space-y-2">
-                          {selectedActivity.recommendations.map((rec, i) => (
-                            <li key={i} className="bg-white dark:bg-slate-900 border border-sky-100 dark:border-slate-700 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-200 text-sm hover:border-sky-300 dark:hover:border-sky-500 transition-colors cursor-pointer">
-                              {rec}
-                            </li>
-                          ))}
+                          {selectedActivity.recommendations.map((rec, i) => {
+                            const isObj = typeof rec === 'object' && rec !== null;
+                            const title = isObj ? rec.title : rec;
+                            const link = isObj ? rec.link : null;
+                            return (
+                              <li key={i} className="bg-white dark:bg-slate-900 border border-sky-100 dark:border-slate-700 px-3 py-2 rounded-lg text-slate-700 dark:text-slate-200 text-sm hover:border-sky-300 dark:hover:border-sky-500 transition-colors cursor-pointer">
+                                {link ? (
+                                  <a href={link} target="_blank" rel="noreferrer" className="text-sky-600 dark:text-sky-400 hover:underline block w-full">{title}</a>
+                                ) : (
+                                  title
+                                )}
+                              </li>
+                            );
+                          })}
                         </ul>
                       )}
                     </div>

@@ -15,6 +15,7 @@ exports.trackActivity = async (req, res) => {
         let timeComplexity = "Unknown";
         let spaceComplexity = "Unknown";
         let recommendedProblems = [];
+        let review = null;
         let aiHint = null;
 
         if (code && code.trim() !== "") {
@@ -24,9 +25,25 @@ exports.trackActivity = async (req, res) => {
                 
                 let prompt = "";
                 if (accepted) {
-                    prompt = `Analyze the following code snippet and determine its time and space complexity in Big-O notation. 
+                    prompt = `You are an expert code reviewer. Analyze the following code snippet and determine its time and space complexity in Big-O notation. 
 Then, based on the problem topics (${topic.join(', ')}), recommend exactly 3 related LeetCode problems.
-Return ONLY a valid JSON object with the exact keys "timeComplexity", "spaceComplexity", and "recommendedProblems" (array of strings). 
+Finally, provide a structured code review.
+
+Provide your response strictly in the following JSON format:
+{
+  "timeComplexity": "string",
+  "spaceComplexity": "string",
+  "recommendedProblems": [
+    { "title": "Problem Title", "link": "https://leetcode.com/problems/..." }
+  ],
+  "review": {
+    "summary": "A brief 2-3 sentence overview of the code's logic, correctness, and general approach.",
+    "suggestions": [
+      "Line [Number]: [Specific actionable feedback]",
+      "General: [Broader architectural or structural feedback]"
+    ]
+  }
+}
 Do not include any other text, markdown formatting, or explanations.
 
 Code:
@@ -50,6 +67,7 @@ ${code}`;
                     timeComplexity = aiResult.timeComplexity || "Unknown";
                     spaceComplexity = aiResult.spaceComplexity || "Unknown";
                     recommendedProblems = aiResult.recommendedProblems || [];
+                    review = aiResult.review || null;
                 } else {
                     aiHint = aiResult.hint || null;
                 }
@@ -73,6 +91,7 @@ ${code}`;
             activity.compileError = compileError || activity.compileError;
             activity.runtimeError = runtimeError || activity.runtimeError;
             if (aiHint) activity.aiHint = aiHint;
+            if (review) activity.review = review;
 
             if (runtime) activity.runtime = runtime;
             if (memory) activity.memory = memory;
@@ -106,6 +125,7 @@ ${code}`;
                 timeComplexity,
                 spaceComplexity,
                 recommendations: recommendedProblems,
+                review,
                 aiHint
             });
             await activity.save();
