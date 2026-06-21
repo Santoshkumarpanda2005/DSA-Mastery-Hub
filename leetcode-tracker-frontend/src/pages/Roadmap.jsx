@@ -1,9 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Map, CheckCircle2, Lock, PlayCircle, X } from 'lucide-react';
 import { roadmapData, phases } from '../data/roadmapData';
 
-export default function Roadmap() {
+export default function Roadmap({ token }) {
   const [selectedNode, setSelectedNode] = useState(null);
+  const [completedProblems, setCompletedProblems] = useState([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('roadmap_completed');
+    if (saved) {
+      try {
+        setCompletedProblems(JSON.parse(saved));
+      } catch (e) {}
+    }
+  }, []);
+
+  const toggleProblem = (title) => {
+    setCompletedProblems(prev => {
+      const isCompleted = prev.includes(title);
+      const updated = isCompleted ? prev.filter(t => t !== title) : [...prev, title];
+      localStorage.setItem('roadmap_completed', JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -110,15 +129,21 @@ export default function Roadmap() {
                     const isObj = typeof prob === 'object' && prob !== null;
                     const title = isObj ? prob.title : prob;
                     const link = isObj ? prob.link : null;
+                    const isChecked = completedProblems.includes(title);
                     return (
-                      <li key={idx} className="flex items-center gap-3 text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-200 dark:border-slate-700/50">
-                        <div className="w-2 h-2 flex-shrink-0 rounded-full bg-purple-500"></div>
+                      <li key={idx} className={`flex items-center gap-3 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg border border-slate-200 dark:border-slate-700/50 transition-colors ${isChecked ? 'opacity-70' : 'text-slate-700 dark:text-slate-300'}`}>
+                        <input 
+                          type="checkbox" 
+                          className="w-4 h-4 cursor-pointer accent-purple-600 flex-shrink-0"
+                          checked={isChecked}
+                          onChange={() => toggleProblem(title)}
+                        />
                         {link ? (
-                          <a href={link} target="_blank" rel="noreferrer" className="hover:text-purple-600 dark:hover:text-purple-400 hover:underline transition-colors block w-full">
+                          <a href={link} target="_blank" rel="noreferrer" className={`hover:text-purple-600 dark:hover:text-purple-400 hover:underline transition-colors block w-full ${isChecked ? 'line-through text-slate-400 dark:text-slate-500' : ''}`}>
                             {title}
                           </a>
                         ) : (
-                          <span className="block w-full">{title}</span>
+                          <span className={`block w-full ${isChecked ? 'line-through text-slate-400 dark:text-slate-500' : ''}`}>{title}</span>
                         )}
                       </li>
                     );
